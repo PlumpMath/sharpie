@@ -16,6 +16,7 @@
                  [org.clojure/clojurescript "0.0-2227"]
                  [garden "1.1.5"]
                  [om "0.6.4"]
+                 [org.clojars.cvillecsteele/ring-permacookie-middleware "1.0.0-SNAPSHOT"]
                  [hiccup "1.0.5"]
                  [fogus/ring-edn "0.2.0"]
                  [hiccup-bridge "1.0.0-SNAPSHOT"]
