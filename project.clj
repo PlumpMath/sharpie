@@ -7,6 +7,7 @@
                  [clojurenote "0.4.0"]
                  [ring "1.1.8"]
                  [clj-time "0.6.0"]
+                 
                  [com.stuartsierra/component "0.2.1"]
                  [org.clojure/core.memoize "0.5.6"]
                  [org.clojure/core.async "0.1.298.0-2a82a1-alpha"]
@@ -23,7 +24,7 @@
   :plugins [
             [lein-cljsbuild "1.0.3"]
             ]
-  :main 
+  :main sharpie.server
 
   :cljsbuild {:builds [{:id "dev"
                         :source-paths "src/cljs"
