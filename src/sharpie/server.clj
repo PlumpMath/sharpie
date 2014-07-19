@@ -2,6 +2,7 @@
   (:use compojure.core)
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
+            [clojure.java.io :as io]
             [sharpie.views.complector :as views]
             [com.stuartsierra.component :as component]
             [ring.util.response :refer [file-response]]
@@ -12,21 +13,36 @@
             [clojure.core.async :refer [chan <! >! put! close! go-loop go]]
             [org.httpkit.server :as http-kit]
             [ring.middleware.reload :as reload]
-            [ring.util.response :as resp]))
+            [ring.util.response :as resp])
+  (:import [javax.script
+            Invocable
+            ScriptEngineManager]))
 
-#_(defn uuid [] (str (java.util.UUID/randomUUID)))
+;; https://github.com/DomKM/omelette as main reference with all this stuff
 
-#_(defn assign-uuid [app]
-   (fn [{session :session :as req}]
-     (if-not (session :uuid)
-      (app (assoc req :session {:uuid (uuid)}))
-      (app req))))
+(defn nashie [edn]
+  (let [js (doto (.getEngineByName (ScriptEngineManager.) "nashorn")
+                                        ; React requires either "window" or "global" to be defined.
+                 (.eval "var global = this")
+                 (.eval (-> "public/javascripts/main/app.js"
+                            io/resource
+                            io/reader)))
+            view (.eval js "sharpie.main")
+            render-to-string (fn [edn]
+                               (.invokeMethod
+                                ^Invocable js
+                                view
+                                "render_to_string"
+                                (-> edn
+                                    list
+                                    object-array)))]
+    
+    (render-to-string (str edn))))
 
-;; component stuff lifted from this repo ->
-;; https://github.com/DomKM/omelette
+
 
 (defn requester [req]
-  (resp/response (req :visitor-id)))
+  (resp/response (nashie {:truth "apples"})))
 
 (defroutes sharpieroutes
   (GET "/" []

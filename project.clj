@@ -28,12 +28,13 @@
   :main sharpie.server
 
   :cljsbuild {:builds [{:id "dev"
-                        :source-paths "src/cljs"
+                        :source-paths ["src/cljs"]
                         :compiler {
+                                   :preamble ["react/react.js"]
                                    :output-to "resources/public/javascripts/main/app.js"
                                    :output-dir "resources/public/javascripts/main/out"
                                    :source-map "resources/public/javascripts/main/app.js.map"
-                                   :optimizations :none
+                                   :optimizations :whitespace
                                    }}
 
                        {:id "release"
