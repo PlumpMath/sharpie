@@ -46,9 +46,7 @@
 
 (defroutes sharpieroutes
   (GET "/" []
-       requester
-       #_(println "wait what" session)
-      #_(resp/response (views/sharpie)))
+       (resp/response (views/sharpie)))
     (route/resources "/" {:root "public"}))
 
 (defrecord Router []

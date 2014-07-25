@@ -30,11 +30,14 @@
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs"]
                         :compiler {
-                                   :preamble ["react/react.js"]
+                                   :preamble ["react/react.js"
+                                              "recorder.js"
+                                              "web-animations.min.js"
+                                              ]
                                    :output-to "resources/public/javascripts/main/app.js"
                                    :output-dir "resources/public/javascripts/main/out"
                                    :source-map "resources/public/javascripts/main/app.js.map"
-                                   :optimizations :whitespace
+                                   :optimizations :none
                                    }}
 
                        {:id "release"
@@ -43,6 +46,14 @@
                                    :output-to "resources/public/javascripts/app.js"
                                    :optimizations :advanced
                                    :pretty-print false
-                                   :preamble ["react/react.min.js"]
-                                   :externs ["react/externs/react.js"]}}
+                                   :preamble ["react/react.js"
+                                              "recorder.js"
+                                              "web-animations.min.js"
+                                              ]
+                                   :externs [
+                                             "recorder.js"
+                                             "resources/public/javascripts/audio-externs.js"
+                                             "resources/public/javascripts/webrtc_externs.js"
+                                             "react/externs/react.js"
+                                             ] }}
                        ]})

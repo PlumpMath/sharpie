@@ -8,9 +8,10 @@
     
     (conj
      '()
+     (html/include-js "/javascripts/recorder.js")
      (element/javascript-tag (str "goog.require('" space "." name "')"))
      (html/include-js  (str "/javascripts/" name "/"  "app.js"))
-     (html/include-js (str "/javascripts/" name "/out/goog/base.js")))
+    (html/include-js (str "/javascripts/" name "/out/goog/base.js")))
     (html/include-js (str "/javascripts/app.js"))
     )
   )
@@ -27,7 +28,7 @@
 (defn sharpie
   [css]
   (html/html5
-   (conj (head-boiler "the new obvious" css)
+   (conj (head-boiler "wonderful" css)
          (html/include-js "//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.11/fastclick.min.js")
          (html/include-css "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css")
          (element/javascript-tag "window.addEventListener('load', function() {
